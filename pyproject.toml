@@ -31,11 +31,11 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0",
-    "ruff>=0.4",
-    "mypy>=1.0",
-    "pyinstaller>=6.0",
-    "build>=1.0",
+    "pytest>=9.0.3",
+    "ruff>=0.15.10",
+    "mypy>=1.20.0",
+    "pyinstaller>=6.19.0",
+    "build>=1.4.3",
 ]
 
 [project.scripts]
