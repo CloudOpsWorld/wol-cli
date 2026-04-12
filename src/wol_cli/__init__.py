@@ -3,7 +3,7 @@
 __version__ = "0.1.0"
 
 from .packet import build_magic_packet, parse_mac
-from .transport import send_udp, send_dot1q, broadcast_from_network
+from .transport import broadcast_from_network, send_dot1q, send_udp
 
 __all__ = [
     "__version__",

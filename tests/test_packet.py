@@ -1,7 +1,8 @@
 """Tests for magic packet construction."""
 
 import pytest
-from wol_cli.packet import parse_mac, build_magic_packet, checksum
+
+from wol_cli.packet import build_magic_packet, checksum, parse_mac
 
 
 class TestParseMac:

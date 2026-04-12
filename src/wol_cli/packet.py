@@ -29,7 +29,7 @@ def checksum(data: bytes) -> int:
     """Calculate IP/UDP checksum."""
     if len(data) % 2:
         data += b"\x00"
-    s = sum(struct.unpack(f"!{len(data)//2}H", data))
+    s: int = sum(struct.unpack(f"!{len(data)//2}H", data))
     while s >> 16:
         s = (s & 0xFFFF) + (s >> 16)
     return ~s & 0xFFFF

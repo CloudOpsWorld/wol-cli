@@ -1,6 +1,7 @@
 """Tests for CLI module."""
 
 import pytest
+
 from wol_cli.cli import create_parser
 
 

@@ -4,7 +4,7 @@ import argparse
 import sys
 
 from . import __version__
-from .transport import send_udp, send_dot1q, broadcast_from_network
+from .transport import broadcast_from_network, send_dot1q, send_udp
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -46,7 +46,7 @@ Examples:
         "--vlan-id",
         type=int,
         metavar="ID",
-        help="802.1Q VLAN ID 1-4094 - sends a tagged raw Ethernet frame (requires --interface and root)",
+        help="802.1Q VLAN ID 1-4094 - sends tagged raw Ethernet frame (requires --interface, root)",
     )
     parser.add_argument(
         "--interface",

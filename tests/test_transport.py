@@ -1,8 +1,9 @@
 """Tests for transport module."""
 
 import pytest
-from wol_cli.transport import broadcast_from_network, build_dot1q_frame
+
 from wol_cli.packet import build_magic_packet
+from wol_cli.transport import broadcast_from_network, build_dot1q_frame
 
 
 class TestBroadcastFromNetwork:

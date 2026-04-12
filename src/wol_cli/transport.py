@@ -5,7 +5,7 @@ import socket
 import struct
 import sys
 
-from .packet import build_magic_packet, parse_mac, checksum
+from .packet import build_magic_packet, checksum, parse_mac
 
 ETH_P_8021Q = 0x8100
 ETH_P_IP = 0x0800
