@@ -1,0 +1,111 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      artifact-linux:
+        description: "Linux binary artifact name"
+        value: "wol-linux-amd64"
+      artifact-windows:
+        description: "Windows binary artifact name"
+        value: "wol-windows-amd64.exe"
+      artifact-macos:
+        description: "macOS binary artifact name"
+        value: "wol-macos-amd64"
+      artifact-package:
+        description: "Python package artifact name"
+        value: "python-package"
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -e .
+
+      - name: Run tests
+        run: pytest -v
+
+  build-binaries:
+    name: Build ${{ matrix.os }} binary
+    needs: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: wol-linux-amd64
+            binary_path: dist/wol
+          - os: windows-latest
+            artifact_name: wol-windows-amd64.exe
+            binary_path: dist/wol.exe
+          - os: macos-latest
+            artifact_name: wol-macos-amd64
+            binary_path: dist/wol
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install .
+
+      - name: Build binary
+        run: pyinstaller --onefile --name wol --clean src/wol_cli/cli.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.binary_path }}
+          retention-days: 7
+
+  build-package:
+    name: Build Python package
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build package
+        run: python -m build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package
+          path: dist/*
+          retention-days: 7
