@@ -65,6 +65,19 @@ jobs:
       - name: Build binary
         run: pyinstaller --onefile --name wol --clean scripts/wol_entry.py
 
+      - name: Test binary (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          chmod +x dist/wol
+          ./dist/wol --version
+          ./dist/wol --help
+
+      - name: Test binary (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          ./dist/wol.exe --version
+          ./dist/wol.exe --help
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
