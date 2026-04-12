@@ -122,28 +122,30 @@ mypy src/
 
 Releases are automated via GitHub Actions. To create a new release:
 
-1. Update the version in `pyproject.toml` and `src/wol_cli/__init__.py`
-2. Commit the changes
+1. Update the version in **both** files (must match):
+   - `pyproject.toml`: `version = "X.Y.Z"`
+   - `src/wol_cli/__init__.py`: `__version__ = "X.Y.Z"`
+
+2. Commit the changes:
+   ```bash
+   git add -A && git commit -m "Bump version to X.Y.Z"
+   ```
+
 3. Create and push a tag:
    ```bash
-   git tag v0.1.0
-   git push origin v0.1.0
+   git tag vX.Y.Z
+   git push origin main --tags
    ```
 
 The workflow will automatically:
+- Validate that tag version matches `pyproject.toml` and `__init__.py`
 - Run tests
 - Build binaries for Linux, Windows, and macOS
 - Build the Python package
-- Publish to PyPI
 - Create a GitHub release with all artifacts
+- Publish to PyPI
 
-### PyPI Setup
-
-To enable PyPI publishing, add a `PYPI_API_TOKEN` secret to your repository:
-
-1. Go to [PyPI Account Settings](https://pypi.org/manage/account/token/)
-2. Create an API token
-3. Add it as a repository secret named `PYPI_API_TOKEN`
+**Note:** The release will fail if versions don't match across all files.
 
 ## License
 

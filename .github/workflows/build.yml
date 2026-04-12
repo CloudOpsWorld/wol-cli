@@ -3,30 +3,21 @@ name: Build
 on:
   workflow_dispatch:
   workflow_call:
-    outputs:
-      artifact-linux:
-        description: "Linux binary artifact name"
-        value: "wol-linux-amd64"
-      artifact-windows:
-        description: "Windows binary artifact name"
-        value: "wol-windows-amd64.exe"
-      artifact-macos:
-        description: "macOS binary artifact name"
-        value: "wol-macos-amd64"
-      artifact-package:
-        description: "Python package artifact name"
-        value: "python-package"
+
+permissions:
+  contents: read
 
 jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -58,10 +49,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -72,10 +63,10 @@ jobs:
           pip install .
 
       - name: Build binary
-        run: pyinstaller --onefile --name wol --clean src/wol_cli/cli.py
+        run: pyinstaller --onefile --name wol --clean scripts/wol_entry.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_name }}
           path: ${{ matrix.binary_path }}
@@ -88,10 +79,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -104,7 +95,7 @@ jobs:
         run: python -m build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: python-package
           path: dist/*
