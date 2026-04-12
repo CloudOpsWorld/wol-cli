@@ -1,7 +1,8 @@
 # wol-cli
 
-[![CI](https://github.com/yourusername/wol-cli-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/wol-cli-tool/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/wol-cli.svg)](https://badge.fury.io/py/wol-cli)
+[![CI](https://github.com/CloudOpsWorld/wol-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/CloudOpsWorld/wol-cli/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/wol-cli.svg)](https://pypi.org/project/wol-cli/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/wol-cli.svg)](https://pypi.org/project/wol-cli/)
 [![Python versions](https://img.shields.io/pypi/pyversions/wol-cli.svg)](https://pypi.org/project/wol-cli/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -23,7 +24,7 @@ pip install wol-cli
 
 ### From GitHub Releases (standalone binary)
 
-Download the appropriate binary for your platform from the [Releases](https://github.com/yourusername/wol-cli-tool/releases) page:
+Download the appropriate binary for your platform from the [Releases](https://github.com/CloudOpsWorld/wol-cli/releases) page:
 
 - `wol-linux-amd64` - Linux x86_64
 - `wol-windows-amd64.exe` - Windows x86_64
