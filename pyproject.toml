@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [
-    { name = "Your Name", email = "you@example.com" }
+    { name = "CloudOpsWorld" }
 ]
 keywords = ["wake-on-lan", "wol", "network", "vlan", "magic-packet"]
 classifiers = [
@@ -42,10 +42,10 @@ dev = [
 wol = "wol_cli.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/wol-cli-tool"
-Repository = "https://github.com/yourusername/wol-cli-tool"
-Issues = "https://github.com/yourusername/wol-cli-tool/issues"
-Changelog = "https://github.com/yourusername/wol-cli-tool/releases"
+Homepage = "https://github.com/CloudOpsWorld/wol-cli"
+Repository = "https://github.com/CloudOpsWorld/wol-cli"
+Issues = "https://github.com/CloudOpsWorld/wol-cli/issues"
+Changelog = "https://github.com/CloudOpsWorld/wol-cli/releases"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/wol_cli"]
