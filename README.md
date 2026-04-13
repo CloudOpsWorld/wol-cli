@@ -120,32 +120,24 @@ mypy src/
 
 ## Releasing
 
-Releases are fully automated via GitHub Actions.
+Releases are automated via GitHub Actions.
 
-### Automatic Release (on merge to master)
+### How to Release
 
-When you merge a PR to `main`/`master`, a new release is automatically created:
+1. Update version in **both** files (must match):
+   - `pyproject.toml`: `version = "X.Y.Z"`
+   - `src/wol_cli/__init__.py`: `__version__ = "X.Y.Z"`
 
-1. Version is auto-bumped based on commit messages:
-   - `breaking:` or `major:` → **major** (1.0.0 → 2.0.0)
-   - `feat:` or `feature:` → **minor** (1.0.0 → 1.1.0)
-   - Other commits → **patch** (1.0.0 → 1.0.1)
+2. Create a PR and merge to `main`/`master`
 
-2. The workflow automatically:
-   - Calculates the next semantic version
-   - Updates `pyproject.toml` and `src/wol_cli/__init__.py`
-   - Creates and pushes the version tag
+3. The workflow automatically:
+   - Validates versions match
+   - Creates tag `vX.Y.Z` (if it doesn't exist)
    - Builds binaries for Linux, Windows, and macOS
-   - Creates a GitHub release with all artifacts
+   - Creates GitHub release with all artifacts
    - Publishes to PyPI
 
-### Manual Release
-
-You can also trigger a release manually:
-
-1. Go to **Actions** → **Release** → **Run workflow**
-2. Select version bump type: `patch`, `minor`, or `major`
-3. Click **Run workflow**
+**Note:** If the tag already exists, no release is created (idempotent).
 
 ## License
 
