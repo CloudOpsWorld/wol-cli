@@ -13,6 +13,7 @@ A Wake-on-LAN magic packet sender with VLAN support.
 - **UDP Broadcast**: Standard Wake-on-LAN via UDP broadcast
 - **Directed Broadcast**: Auto-compute broadcast address from CIDR notation
 - **802.1Q VLAN Support**: Send tagged Ethernet frames directly (Linux only, requires root)
+- **Device Aliases**: Save device configurations for quick access
 
 ## Installation
 
@@ -66,6 +67,14 @@ Send a VLAN-tagged raw Ethernet frame (requires root):
 sudo wol AA:BB:CC:DD:EE:FF --vlan-id 10 --interface eth0
 ```
 
+### Using Aliases
+
+Wake a device using its alias name instead of MAC address:
+
+```bash
+wol my-server
+```
+
 ### Options
 
 | Option | Description |
@@ -76,6 +85,56 @@ sudo wol AA:BB:CC:DD:EE:FF --vlan-id 10 --interface eth0
 | `--vlan-id ID` | 802.1Q VLAN ID (1-4094) |
 | `--interface IFACE` | Network interface for 802.1Q mode |
 | `--version` | Show version |
+
+## Alias Management
+
+Aliases let you save device configurations for quick access. The configuration is stored in an OS-specific location:
+
+| OS | Config Path |
+|----|-------------|
+| Linux | `~/.config/wol-cli/config.toml` (or `$XDG_CONFIG_HOME/wol-cli/config.toml`) |
+| macOS | `~/Library/Application Support/wol-cli/config.toml` |
+| Windows | `%APPDATA%\wol-cli\config.toml` |
+
+### Add an Alias
+
+```bash
+# Simple alias with just MAC address
+wol alias add my-server AA:BB:CC:DD:EE:FF
+
+# Alias with network settings
+wol alias add my-server AA:BB:CC:DD:EE:FF --network 192.168.10.0/24
+
+# Alias with VLAN settings
+wol alias add my-server AA:BB:CC:DD:EE:FF --vlan-id 100 --interface eth0
+
+# Alias with all options
+wol alias add my-server AA:BB:CC:DD:EE:FF --ip 192.168.1.255 --port 7
+```
+
+### List Aliases
+
+```bash
+wol alias list
+```
+
+### Show Alias Details
+
+```bash
+wol alias show my-server
+```
+
+### Remove an Alias
+
+```bash
+wol alias remove my-server
+```
+
+### Show Config File Path
+
+```bash
+wol alias path
+```
 
 ## Library Usage
 
@@ -90,6 +149,28 @@ send_udp("AA:BB:CC:DD:EE:FF", ip="192.168.10.255")
 
 # Build a magic packet manually
 packet = build_magic_packet("AA:BB:CC:DD:EE:FF")
+```
+
+### Alias Management (Programmatic)
+
+```python
+from wol_cli import add_alias, get_alias, list_aliases, remove_alias, get_config_path
+
+# Add an alias
+add_alias("my-server", "AA:BB:CC:DD:EE:FF", network="192.168.10.0/24")
+
+# Get alias configuration
+config = get_alias("my-server")
+# {'mac': 'AA:BB:CC:DD:EE:FF', 'network': '192.168.10.0/24'}
+
+# List all aliases
+aliases = list_aliases()
+
+# Remove an alias
+remove_alias("my-server")
+
+# Get config file path
+path = get_config_path()
 ```
 
 ## Development
